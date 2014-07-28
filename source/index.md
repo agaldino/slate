@@ -16,7 +16,8 @@ search: true
 
 # Introduction
 
-Welcome to the SmartWallet! You can use our API to access SmartWallet endpoints, which can create, update, get information about account and execute all transaction operations (Create, Refund, Update)
+Welcome to the SmartWallet! 
+You can use our API to access SmartWallet endpoints, which can create, update, get information about account and execute all transaction operations (Create, Refund, Update)
 
 
 # Authentication
@@ -38,26 +39,236 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 > Request object used to create an account.
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+    "AccountReference": "André",
+    "Addresses": [
+        {
+            "AddressNumber": "199",
+            "City": "Rio de Janeiro",
+            "District": "Centro",
+            "State": "RJ",
+            "StreetAddress": "Rua da Quitanda",
+            "ZipCode": "1236547"
+        }
+    ],
+    "DbaName": "André Galdino2 DBNAME",
+    "DocumentNumber": "430015",
+    "DocumentType": "CNPJ",
+    "Email": "agaldino@Mmundipagg.com",
+    "FinancialDetails": [
+        {
+            "Bank": {
+                "AccountNumber": "8",
+                "AgencyNumber": "1236",
+                "BankCode": "341"
+            },
+            "Destination": "Test",
+            "Email": "agaldino@mundipagg.com"
+        }
+    ],
+    "LegalName": "André Galdino LEGALNAME",
+    "PhoneNumber": "99999999999",
+    "RequestKey": "00000000-0000-0000-0000-000000000000",    
+    "SocialUserName": "@_andre_galdino"
+}
+```
+
+> The above request returns an answear like this:
+
+```json
+{
+    "AccountKey": "ba1c2524-bd81-4f9d-8f97-673781768c59",
+    "LegalName": "André Galdino LEGALNAME",
+    "DbaName": "André Galdino2 DBNAME",
+    "AccountReference": "André",
+    "DocumentNumber": "430015",
+    "DocumentType": "CNPJ",
+    "RequestKey": "00000000-0000-0000-0000-000000000000",
+    "Errors": null
+}
 ```
 
 This endpoint is used to create an new account linked to your SmartWallet, that is represented by your SmartWalletKey.
 
 ### HTTP Request
 
-`GET https://smartwallet.mundipaggone.com/Account/`
+`POST https://smartwallet.mundipaggone.com/Account/`
+
+### Parameters
+
+Parameter | Description
+--------- | -----------
+AccountReference | Identification for the account defined by your system.
+LegalName | The legal name for the company or person.
+DbaName | Name that your company or person uses to do business.
+DocumentNumber | The number of the document that identifies you company ou person legaly.
+DocumentType | Type of the document (CPNJ / CPF).
+Email | Email address for your account.
+PhoneNumber | Phone number for this account.
+Addresses | Collection of addresses.
+FinancialDetails | Account financial details.
+RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
+
+
+<aside class="warning">
+At the response object you will find the **AccountKey**. This is the key that will be used to execute all actions related to that account, like updating informations and add credit.
+
+You must keep that information stored, or ortherwise you will not be able to execute any operations related to that account.
+
+**"AccountKey": "ba1c2524-bd81-4f9d-8f97-673781768c59"**
+</aside>
+
+## Update Account
+
+`PATCH https://smartwallet.mundipaggone.com/Account/{AccountKey}`
+
+This endpoint is used to update an existing account. The request object is the same used at the creation of an account.
+Every data send will replace the existing data for that account.
+
+Ex: If you want to update only the DbaName and the LegalName you can send only these specific fields.
+
+````json
+{
+    "DbaName": "André Galdino Updated",    
+    "LegalName": "André Galdino Updated"
+}
+```
+
+## Get a Specific Account
+
+> This request returns a JSON like this: 
+
+```json
+{
+    "AccountKey": "f0b1e74c-0798-47e4-838d-fe02c9cecc71",
+    "LegalName": "André Galdino",
+    "DbaName": "André Galdino",
+    "AccountReference": "André",
+    "DocumentNumber": "0321654987",
+    "DocumentType": "CPF",
+    "RequestKey": "8CE94ECB-7D8B-4D6C-A341-CA2C259A9C5C",
+    "Errors": null
+}
+```
+
+`GET https://smartwallet.mundipaggone.com/Account/{AccountKey}`
+
+This endpoint will return the basic informations for a specific account.
+
+### Exemple:
+HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-838D-FE02C9CECC71**
+
+# Transaction
+
+## Create Transaction
+
+> Request object used to create a transaction 
+
+```json
+{
+    "CreditCardCollection": [
+        {
+            "Amount": 100,
+            "CreditCardNumber": "123654889",
+            "CreditCardType": "",
+            "Cvv2": "528",
+            "ExpirationDate": "2014-07-01",
+            "HolderName": "ANDRE GALDINO"
+        }
+    ],
+    "CreditItemCollection": [
+        {
+            "AccountKey": "f0b1e74c-0798-47e4-838d-fe02c9cecc71",
+            "Amount": 100,
+            "CurrencyIsoCode": "BRL",
+            "Description": "GenericItem",
+            "FeeType": "Percent",
+            "FeeValue": 10,
+            "HoldTransaction": false,
+            "ItemReference": "ItemReference123",
+            "SplitTransaction": true
+        }
+    ],
+    "Order": {
+        "Amount": 100,
+        "OrderDate": "2014-07-28",
+        "OrderReference": "0123",
+        "PaymentDate": "2014-07-28",
+        "RefundDate": null
+    },
+    "RequestKey": "00000000-0000-0000-0000-000000000000"
+}
+```
+
+> The response for te above request looks like this:
+
+```json
+{
+    "CreditFinancialMovementCollection": [
+        {
+            "ItemReference": "GenericItem",
+            "AccountKey": "991aa261-9fe7-42c7-bbd7-8ef286c2d4df",
+            "FinancialMovementKey": "ce5c421b-8690-411b-b984-7741abb5dc2c"
+        }
+    ],
+    "RequestKey": "3797f66d-a465-4e84-ab09-c300b276a227",
+    "Errors": null
+}
+```
+
+
+### HTTP REQUEST
+`POST https://smartwallet.mundipaggone.com/Transaction/`
+
+### Request Parameters
+Parameter | Description
+--------- | -----------
+CreditCardCollection | Collection of credit cards used to pay this transaction.
+CreditItemCollection | Collection of itens, each item identifies a new credit input to the referenced account.
+Order (Optional) | In use case of a MarketPlace you can sent iformations about the order.
+RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
+
+### CreditCardCollection Parameters
+Parameter | Description
+--------- | -----------
+Amount | Amount to be charged in this credit card.
+CrediCardNumber | Number of the credit card.
+CreditCardType | Type of the credit card.
+Cvv2 | Credit card's security number.
+ExpirationDate | Credit card's expiration date.
+HolderName | Credit card's holder name.
+
+### CreditCardCollection Parameters
+Parameter | Description
+--------- | -----------
+AccountKey | Key that identifies tha account that will receive this credit value.
+Amount | Amount that will be credited in this account.
+CurrencyIsoCode | Code that represents the currency that you're dealing with.
+Description | A small description of the item.
+FeeType | Define the type of the fee value. **Percent** or **Flat**
+FeeValue | Value of the fee charged for this transaction.
+HoldTransaction | Boolean value that defines if the transaction will be blocked at the moment of creation or not.
+ItemReference | Reference for the item.
+SplitTransaction | Boolean value that defines if this transaction will be splited between the account receiving the credit and the account that owns this SmartWallet or not.
+
+### Order Parameters
+Parameter | Description
+--------- | -----------
+Amount | Total amount of the order.
+OrderDate | Date of the order.
+OrderReference | Identification for this order (Ex: Order number).
+PaymentDate | Date that this order was paid.
+RefundDate | Data that this order was refunded.
+
+
+<aside class="warning">
+At the response object you will find the **FinancialMovementKey**. This is the key that will be used to execute all actions related a existing transaction.
+
+You must keep that information stored, or ortherwise you will not be able to execute any operations related to that transaction.
+
+**"FinancialMovementKey": "ba1c2524-bd81-4f9d-8f97-673781768c59"**
+</aside>
+
+## Refund Transaction
+
+## Update Transaction
