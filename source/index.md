@@ -270,5 +270,29 @@ You must keep that information stored, or ortherwise you will not be able to exe
 </aside>
 
 ## Refund Transaction
+`POST https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
+
+This endpoint is used to Refund a existing transaction.
+
+This action have an extra option that change it default behavior.
+Sending the field LiabilityShift you can define the way that the refund will be made.
+There are two possible values:
+
+Parameter | Description
+--------- | -----------
+Client | When the refund is requested by the client and both the MasterAccount and the SubMerchantAccount will receive theirs amount back.
+Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction.
+
+Sending the body is optional, and in case it is not sent the default value will be **CLIENT**.
+
+> Liability shift exemple
+
+```json
+{
+    "LiabilityShift": "Partner",
+    "RequestKey": "00000000-0000-0000-0000-000000000000"
+}
+```
 
 ## Update Transaction
+`PATCH https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
