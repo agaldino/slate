@@ -271,6 +271,14 @@ You must keep that information stored, or ortherwise you will not be able to exe
 
 ## Refund Transaction
 ### HTTP REQUEST
+> Liability shift exemple
+
+```json
+{
+    "LiabilityShift": "Partner"    
+}
+```
+
 `POST https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
 This endpoint is used to Refund a existing transaction.
@@ -286,16 +294,17 @@ Partner | When the refund is requested by the partner and because of that the cl
 
 Sending the body is optional, and in case it is not sent the default value will be **CLIENT**.
 
-> Liability shift exemple
-
-```json
-{
-    "LiabilityShift": "Partner"    
-}
-```
 
 ## Update Transaction
 ### Http request
+>Update Status exemple
+
+```json
+{
+    "RequestKey": "00000000-0000-0000-0000-000000000000", 
+    "Status": "Used"
+}
+```
 `PATCH https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
 When creating a transaction there is the option to Block it and retain it values to not be accounted in the total values. After that it's possible to update that transaction status to two possible values:
