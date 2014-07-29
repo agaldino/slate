@@ -270,6 +270,7 @@ You must keep that information stored, or ortherwise you will not be able to exe
 </aside>
 
 ## Refund Transaction
+### HTTP REQUEST
 `POST https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
 This endpoint is used to Refund a existing transaction.
@@ -281,7 +282,7 @@ There are two possible values:
 Parameter | Description
 --------- | -----------
 Client | When the refund is requested by the client and both the MasterAccount and the SubMerchantAccount will receive theirs amount back.
-Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction.
+Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction if the transaction was splited.
 
 Sending the body is optional, and in case it is not sent the default value will be **CLIENT**.
 
@@ -289,10 +290,17 @@ Sending the body is optional, and in case it is not sent the default value will 
 
 ```json
 {
-    "LiabilityShift": "Partner",
-    "RequestKey": "00000000-0000-0000-0000-000000000000"
+    "LiabilityShift": "Partner"    
 }
 ```
 
 ## Update Transaction
+### Http request
 `PATCH https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
+
+When creating a transaction there is the option to Block it and retain it values to not be accounted in the total values. After that it's possible to update that transaction status to two possible values:
+
+Parameter | Description
+----------|------------
+Used | When the transaction status is set to Used it sum up to the total value of the account that received that credit.
+Expired | When the transaction status is set to Expired the total value is added to the MasterAccount of that SmartWallet.
