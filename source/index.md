@@ -10,6 +10,7 @@ toc_footers:
 
 includes:
   - errors
+  - mcc
 
 search: true
 ---
@@ -40,36 +41,40 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 
 ```json
 {
-    "AccountReference": "André",
+    "AccountReference": "sample string 8",
     "Addresses": [
         {
-            "AddressNumber": "199",
-            "City": "Rio de Janeiro",
-            "District": "Centro",
-            "State": "RJ",
-            "StreetAddress": "Rua da Quitanda",
-            "ZipCode": "1236547"
+            "AddressNumber": "sample string 2",
+            "City": "sample string 4",
+            "Complement": "sample string 3",
+            "Country": "sample string 8",
+            "District": "sample string 5",
+            "State": "sample string 6",
+            "StreetAddress": "sample string 1",
+            "ZipCode": "sample string 7"
         }
     ],
-    "DbaName": "André Galdino2 DBNAME",
-    "DocumentNumber": "430015",
-    "DocumentType": "CNPJ",
-    "Email": "agaldino@Mmundipagg.com",
+    "DbaName": "sample string 2",
+    "DocumentNumber": "sample string 5",
+    "DocumentType": "sample string 4",
+    "Email": "sample string 6",
     "FinancialDetails": [
         {
             "Bank": {
-                "AccountNumber": "8",
-                "AgencyNumber": "1236",
-                "BankCode": "341"
+                "AccountNumber": "sample string 3",
+                "AgencyNumber": "sample string 2",
+                "BankCode": "sample string 1"
             },
-            "Destination": "Test",
-            "Email": "agaldino@mundipagg.com"
+            "Destination": "sample string 1",
+            "Email": "sample string 2"
         }
     ],
-    "LegalName": "André Galdino LEGALNAME",
-    "PhoneNumber": "99999999999",
-    "RequestKey": "00000000-0000-0000-0000-000000000000",    
-    "SocialUserName": "@_andre_galdino"
+    "LegalName": "sample string 1",
+    "MCC": 9,
+    "PhoneNumber": "sample string 7",
+    "RequestKey": "4636d485-583e-4f7d-a776-bdc4d9654950",
+    "SmartWalletKey": "309d448f-246b-4f4e-8e97-dbfb771844fb",
+    "SocialUserName": "sample string 3"
 }
 ```
 
@@ -77,14 +82,26 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 
 ```json
 {
-    "AccountKey": "ba1c2524-bd81-4f9d-8f97-673781768c59",
-    "LegalName": "André Galdino LEGALNAME",
-    "DbaName": "André Galdino2 DBNAME",
-    "AccountReference": "André",
-    "DocumentNumber": "430015",
-    "DocumentType": "CNPJ",
-    "RequestKey": "00000000-0000-0000-0000-000000000000",
-    "Errors": null
+    "AccountKey": "f489675e-6e9d-49e5-bea3-17f38163e079",
+    "AccountReference": "sample string 4",
+    "Acquirer": {
+        "AcquireCode": "sample string 2",
+        "AcquirerAffiliationKey": "sample string 1",
+        "AcquirerName": "sample string 3"
+    },
+    "DbaName": "sample string 3",
+    "DocumentNumber": "sample string 5",
+    "DocumentType": 0,
+    "Errors": [
+        {
+            "DocumentationUrl": "sample string 4",
+            "ErrorCode": 1,
+            "ErrorDescription": "sample string 3",
+            "ParameterName": "sample string 2"
+        }
+    ],
+    "LegalName": "sample string 2",
+    "RequestKey": "0fb908dd-d489-46f0-86b5-482206be3047"
 }
 ```
 
@@ -108,6 +125,7 @@ PhoneNumber | Phone number for this account.
 Addresses | Collection of addresses.
 FinancialDetails | Account financial details.
 RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
+MCC | Mcc table.
 
 
 <aside class="warning">
@@ -186,7 +204,8 @@ HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-8
             "FeeValue": 10,
             "HoldTransaction": false,
             "ItemReference": "ItemReference123",
-            "SplitTransaction": true
+            "SplitTransaction": true,
+            "LiabilityShift": "Client"
         }
     ],
     "Order": {
@@ -250,6 +269,7 @@ FeeValue | Value of the fee charged for this transaction.
 HoldTransaction | Boolean value that defines if the transaction will be blocked at the moment of creation or not.
 ItemReference | Reference for the item.
 SplitTransaction | Boolean value that defines if this transaction will be splited between the account receiving the credit and the account that owns this SmartWallet or not.
+LiabilityShift | Explained above *
 
 ### Order Parameters
 Parameter | Description
@@ -261,6 +281,17 @@ PaymentDate | Date that this order was paid.
 RefundDate | Data that this order was refunded.
 
 
+### LiabilityShift
+Sending the field LiabilityShift you can define the way that the refund will be made.
+There are two possible values:
+
+Parameter | Description
+--------- | -----------
+Client | When the refund is requested by the client and both the MasterAccount and the SubMerchantAccount will receive theirs amount back.
+Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction if the transaction was splited.
+
+Sending is optional, and in case it is not sent the default value will be **CLIENT**.
+
 <aside class="warning">
 At the response object you will find the **FinancialMovementKey**. This is the key that will be used to execute all actions related a existing transaction.
 
@@ -271,29 +302,10 @@ You must keep that information stored, or ortherwise you will not be able to exe
 
 ## Refund Transaction
 ### HTTP REQUEST
-> Liability shift exemple
-
-```json
-{
-    "LiabilityShift": "Partner"    
-}
-```
 
 `POST https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
 This endpoint is used to Refund a existing transaction.
-
-This action have an extra option that change it default behavior.
-Sending the field LiabilityShift you can define the way that the refund will be made.
-There are two possible values:
-
-Parameter | Description
---------- | -----------
-Client | When the refund is requested by the client and both the MasterAccount and the SubMerchantAccount will receive theirs amount back.
-Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction if the transaction was splited.
-
-Sending the body is optional, and in case it is not sent the default value will be **CLIENT**.
-
 
 ## Update Transaction
 ### Http request
