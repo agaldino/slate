@@ -41,40 +41,40 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 
 ```json
 {
-    "AccountReference": "sample string 8",
+    "AccountReference": "GenericReference",
     "Addresses": [
         {
-            "AddressNumber": "sample string 2",
-            "City": "sample string 4",
-            "Complement": "sample string 3",
-            "Country": "sample string 8",
-            "District": "sample string 5",
-            "State": "sample string 6",
-            "StreetAddress": "sample string 1",
-            "ZipCode": "sample string 7"
+            "AddressNumber": "42",
+            "City": "Rio de Janeiro",
+            "Complement": "",
+            "Country": "Brasil",
+            "District": "",
+            "State": "RJ",
+            "StreetAddress": "GenericStreet",
+            "ZipCode": "123465"
         }
     ],
-    "DbaName": "sample string 2",
-    "DocumentNumber": "sample string 5",
-    "DocumentType": "sample string 4",
-    "Email": "sample string 6",
+    "DbaName": "Arthur",
+    "DocumentNumber": "123456789",
+    "DocumentType": "CNPJ",
+    "Email": "exemple@exemple.com",
     "FinancialDetails": [
         {
             "Bank": {
-                "AccountNumber": "sample string 3",
-                "AgencyNumber": "sample string 2",
-                "BankCode": "sample string 1"
+                "AccountNumber": "000",
+                "AgencyNumber": "123456",
+                "BankCode": "789"
             },
-            "Destination": "sample string 1",
-            "Email": "sample string 2"
+            "Destination": "sample",
+            "Email": "exemple@exemple.com"
         }
     ],
-    "LegalName": "sample string 1",
-    "MCC": 9,
-    "PhoneNumber": "sample string 7",
+    "LegalName": "Arthur Dent",
+    "MCC": 0042,
+    "PhoneNumber": "9999999999",
     "RequestKey": "4636d485-583e-4f7d-a776-bdc4d9654950",
     "SmartWalletKey": "309d448f-246b-4f4e-8e97-dbfb771844fb",
-    "SocialUserName": "sample string 3"
+    "SocialUserName": ""
 }
 ```
 
@@ -83,24 +83,24 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 ```json
 {
     "AccountKey": "f489675e-6e9d-49e5-bea3-17f38163e079",
-    "AccountReference": "sample string 4",
+    "AccountReference": "GenericReference",
     "Acquirer": {
-        "AcquireCode": "sample string 2",
-        "AcquirerAffiliationKey": "sample string 1",
-        "AcquirerName": "sample string 3"
+        "AcquireCode": "123456",
+        "AcquirerAffiliationKey": "321657498765413267987",
+        "AcquirerName": "Generic"
     },
-    "DbaName": "sample string 3",
-    "DocumentNumber": "sample string 5",
-    "DocumentType": 0,
+    "DbaName": "Arthur",
+    "DocumentNumber": "123456789",
+    "DocumentType": CNPJ,
     "Errors": [
         {
-            "DocumentationUrl": "sample string 4",
+            "DocumentationUrl": "sample string",
             "ErrorCode": 1,
-            "ErrorDescription": "sample string 3",
-            "ParameterName": "sample string 2"
+            "ErrorDescription": "sample string",
+            "ParameterName": "sample string"
         }
     ],
-    "LegalName": "sample string 2",
+    "LegalName": "Arthur Dent",
     "RequestKey": "0fb908dd-d489-46f0-86b5-482206be3047"
 }
 ```
@@ -125,7 +125,7 @@ PhoneNumber | Phone number for this account.
 Addresses | Collection of addresses.
 FinancialDetails | Account financial details.
 RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
-MCC | Mcc table.
+MCC | Mcc code. The Mcc table can be found at the end of this document.
 
 
 <aside class="warning">
@@ -147,8 +147,8 @@ Ex: If you want to update only the DbaName and the LegalName you can send only t
 
 ````json
 {
-    "DbaName": "André Galdino Updated",    
-    "LegalName": "André Galdino Updated"
+    "DbaName": "Arthur Dent Updated",    
+    "LegalName": "Arthur Dent Updated"
 }
 ```
 
@@ -159,10 +159,10 @@ Ex: If you want to update only the DbaName and the LegalName you can send only t
 ```json
 {
     "AccountKey": "f0b1e74c-0798-47e4-838d-fe02c9cecc71",
-    "LegalName": "André Galdino",
-    "DbaName": "André Galdino",
-    "AccountReference": "André",
-    "DocumentNumber": "0321654987",
+    "LegalName": "Arthur Dent",
+    "DbaName": "Arthur",
+    "AccountReference": "Arthur",
+    "DocumentNumber": "123456789",
     "DocumentType": "CPF",
     "RequestKey": "8CE94ECB-7D8B-4D6C-A341-CA2C259A9C5C",
     "Errors": null
@@ -191,7 +191,7 @@ HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-8
             "CreditCardType": "",
             "Cvv2": "528",
             "ExpirationDate": "2014-07-01",
-            "HolderName": "ANDRE GALDINO"
+            "HolderName": "Arthur Dent"
         }
     ],
     "CreditItemCollection": [
