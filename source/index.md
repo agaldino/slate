@@ -186,19 +186,10 @@ HTTP's GET para esse recurso utilizando a AccountKey **F0B1E74C-0798-47E4-838D-F
 > Objeto utilizado para criar uma transação
 
 ```json
-{
-    "CreditCardCollection": [
-        {
-            "Amount": 100,
-            "CreditCardNumber": "123654889",
-            "CreditCardType": "",
-            "Cvv2": "528",
-            "ExpirationDate": "2014-07-01",
-            "HolderName": "Arthur Dent"
-        }
-    ],
+{    
     "CreditItemCollection": [
         {
+            "OneTransactionKey": "00000000-0000-0000-0000-000000000000"
             "AccountKey": "f0b1e74c-0798-47e4-838d-fe02c9cecc71",
             "Amount": 100,
             "CurrencyIsoCode": "BRL",
@@ -245,24 +236,14 @@ HTTP's GET para esse recurso utilizando a AccountKey **F0B1E74C-0798-47E4-838D-F
 ### Parâmetros da requisição
 Parametros | Descrição
 --------- | -----------
-CreditCardCollection | Coleção de cartões utilizados para pagar essa transação.
 CreditItemCollection | Coleção de itens de crédito, cada item identifica uma transação para a conta referenciada.
 Order (Optional) | Informações sobre o pedido.
 RequestKey | Chave que identifica a requisição enviada para a API (Caso não seja enviado será definido pelo serviço).
 
-### Parâmetros de cartão de crédito
-Parametro | Descrição
---------- | -----------
-Amount | Valor cobrado no cartão.
-CrediCardNumber | Numero do cartão de credito.
-CreditCardType | Banderia do cartão.
-Cvv2 | Código de segurança do cartão de crédito.
-ExpirationDate | Data de expiração do cartão.
-HolderName | Nome do proprietário do cartão.
-
 ### Parâmetros de Créditos (Transações)
 Parametro | Descrição
 --------- | -----------
+OneTransactionKey | Chave que identifica uma transação que foi realizada no Gateway(One). **Obrigatório para o Split**.
 AccountKey | Chave que identifica a conta que será creditado o valor.
 Amount | Valor que será creditado na conta.
 CurrencyIsoCode | Código que representa a moeda que está sendo usada.
