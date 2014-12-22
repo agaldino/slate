@@ -15,29 +15,30 @@ includes:
 search: true
 ---
 
-# Introduction
+# Introdução
 
-Welcome to the SmartWallet! 
-You can use our API to access SmartWallet endpoints, which can create, update, get information about account and execute all transaction operations (Create, Refund, Update)
+Bem vindo ao SmartWallet!
+Você pode utilizar API para acessar os recusos do serviço, com os quais é possivel criar, atualizar e consultar informações sobre uma conta, além de executar split de transações.
 
 
-# Authentication
+# Autenticação
 
-SmartWallet uses API keys to allow access to the API. 
+A API do SmartWallet usa chaves que permitem o acesso aos recursos do serviço. 
+A SmartWalletKey é o seu identificador único no serviço, e a chave de acesso deve ser enviada no cabeçalho a cada requisição feita o serviço. 
 
-SmartWallet expects for the API key to be included in all API requests to the server in a header that looks like the following:
+Exemplo:
 
 `SmartWalletKey: E485075C-A77D-404A-A966-72AD93E1CB7D`
 
 <aside class="notice">
-You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API key.
+Você deve substituir `E485075C-A77D-404A-A966-72AD93E1CB7D` com a sua chave pessoal.
 </aside>
 
-# Account
+# Contas
 
-## Create Account
+## Criação de Conta
 
-> Request object used to create an account.
+> Requisição usada pra criar uma conta.
 
 ```json
 {
@@ -78,7 +79,7 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 }
 ```
 
-> The above request returns an answear like this:
+> A requisição acima retorna uma resposta como essa:
 
 ```json
 {
@@ -105,45 +106,47 @@ You must replace `E485075C-A77D-404A-A966-72AD93E1CB7D` with your personal API k
 }
 ```
 
-This endpoint is used to create an new account linked to your SmartWallet, that is represented by your SmartWalletKey.
+Esse recurso é utilizado para criar uma nova conta que é ligada a sua carteira virtural, que é representada a sua SmartWalletKey.
 
 ### HTTP Request
 
 `POST https://smartwallet.mundipaggone.com/Account/`
 
-### Parameters
+### Parâmetros
 
-Parameter | Description
+Parâmetros | Descrição
 --------- | -----------
-AccountReference | Identification for the account defined by your system.
-LegalName | The legal name for the company or person.
-DbaName | Name that your company or person uses to do business.
-DocumentNumber | The number of the document that identifies you company ou person legaly.
-DocumentType | Type of the document (CPNJ / CPF).
-Email | Email address for your account.
-PhoneNumber | Phone number for this account.
-Addresses | Collection of addresses.
-FinancialDetails | Account financial details.
-RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
-MCC | Mcc code. The Mcc table can be found at the end of this document.
+AccountReference | Identificador da conta definido pelo seu sistema.
+LegalName | Razão social, ou nome caso seja pessoa fisica.
+DbaName | Nome fantasia da empresa.
+DocumentNumber | Numero de documento.
+DocumentType | Tipo de documento (CPNJ / CPF).
+Email | Endereço de email da conta.
+PhoneNumber | Numero de telefone para a conta.
+Addresses | Coleção de endereços.
+FinancialDetails | Detalhes financeiro para a conta.
+RequestKey | Chave que identifica a requisição enviada para a API (Caso não seja enviado será definido pelo serviço).
+MCC | Codigo MCC. Tabela com os códigos MCC pode ser encontrada no fim do documento.
 
 
 <aside class="warning">
-At the response object you will find the **AccountKey**. This is the key that will be used to execute all actions related to that account, like updating informations and add credit.
+Na resposta de seviço de criação de contas encontra-se a **AccountKey**. Essa chave será usada pra todas as futuras operações relacionadas a essa conta, como atualização de informações e adição de crédito.
 
-You must keep that information stored, or ortherwise you will not be able to execute any operations related to that account.
+É necessário guardar essa informação, pois sem ela não será possível realizar nenhuma operação relacionada a essa conta.
+
+Ex:
 
 **"AccountKey": "ba1c2524-bd81-4f9d-8f97-673781768c59"**
 </aside>
 
-## Update Account
+## Atualização de Conta
 
 `PATCH https://smartwallet.mundipaggone.com/Account/{AccountKey}`
 
-This endpoint is used to update an existing account. The request object is the same used at the creation of an account.
-Every data send will replace the existing data for that account.
+Esse recurso é utilizado para atualizar os dados de uma conta já existente. O objeto enviado na requisição é o mesmo utilizado na criação de conta.
+Todos os campos que forem enviados subistituirão os dados já existentes. 
 
-Ex: If you want to update only the DbaName and the LegalName you can send only these specific fields.
+Ex: Se o desejado é atualizar somente a Razão social e o Nome Fantasia da conta, é possível enviar somente esses dados;
 
 ````json
 {
@@ -152,9 +155,9 @@ Ex: If you want to update only the DbaName and the LegalName you can send only t
 }
 ```
 
-## Get a Specific Account
+## Consultar dados de uma conta.
 
-> This request returns a JSON like this: 
+> O objeto retornado para esse recurso:
 
 ```json
 {
@@ -171,16 +174,16 @@ Ex: If you want to update only the DbaName and the LegalName you can send only t
 
 `GET https://smartwallet.mundipaggone.com/Account/{AccountKey}`
 
-This endpoint will return the basic informations for a specific account.
+Esse recurso retorna as informações basicas para uma conta especifica.
 
-### Exemple:
-HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-838D-FE02C9CECC71**
+### Exemplo:
+HTTP's GET para esse recurso utilizando a AccountKey **F0B1E74C-0798-47E4-838D-FE02C9CECC71**
 
-# Transaction
+# Transação
 
-## Create Transaction
+## Criando uma transação
 
-> Request object used to create a transaction 
+> Objeto utilizado para criar uma transação
 
 ```json
 {
@@ -219,7 +222,7 @@ HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-8
 }
 ```
 
-> The response for te above request looks like this:
+> Exemplo de resposta para a requisição acima
 
 ```json
 {
@@ -239,77 +242,77 @@ HTTP's GET request for this endpoint using the AccountKey **F0B1E74C-0798-47E4-8
 ### HTTP REQUEST
 `POST https://smartwallet.mundipaggone.com/Transaction/`
 
-### Request Parameters
-Parameter | Description
+### Parâmetros da requisição
+Parametros | Descrição
 --------- | -----------
-CreditCardCollection | Collection of credit cards used to pay this transaction.
-CreditItemCollection | Collection of itens, each item identifies a new credit input to the referenced account.
-Order (Optional) | In use case of a MarketPlace you can sent iformations about the order.
-RequestKey | Key that identifies this request to the API. (If not set, will be defined by the API)
+CreditCardCollection | Coleção de cartões utilizados para pagar essa transação.
+CreditItemCollection | Coleção de itens de crédito, cada item identifica uma transação para a conta referenciada.
+Order (Optional) | Informações sobre o pedido.
+RequestKey | Chave que identifica a requisição enviada para a API (Caso não seja enviado será definido pelo serviço).
 
-### CreditCardCollection Parameters
-Parameter | Description
+### Parâmetros de cartão de crédito
+Parametro | Descrição
 --------- | -----------
-Amount | Amount to be charged in this credit card.
-CrediCardNumber | Number of the credit card.
-CreditCardType | Type of the credit card.
-Cvv2 | Credit card's security number.
-ExpirationDate | Credit card's expiration date.
-HolderName | Credit card's holder name.
+Amount | Valor cobrado no cartão.
+CrediCardNumber | Numero do cartão de credito.
+CreditCardType | Banderia do cartão.
+Cvv2 | Código de segurança do cartão de crédito.
+ExpirationDate | Data de expiração do cartão.
+HolderName | Nome do proprietário do cartão.
 
-### CreditCardCollection Parameters
-Parameter | Description
+### Parâmetros de Créditos (Transações)
+Parametro | Descrição
 --------- | -----------
-AccountKey | Key that identifies tha account that will receive this credit value.
-Amount | Amount that will be credited in this account.
-CurrencyIsoCode | Code that represents the currency that you're dealing with.
-Description | A small description of the item.
-FeeType | Define the type of the fee value. **Percent** or **Flat**
-FeeValue | Value of the fee charged for this transaction.
-HoldTransaction | Boolean value that defines if the transaction will be blocked at the moment of creation or not.
-ItemReference | Reference for the item.
-SplitTransaction | Boolean value that defines if this transaction will be splited between the account receiving the credit and the account that owns this SmartWallet or not.
-LiabilityShift | Explained above *
+AccountKey | Chave que identifica a conta que será creditado o valor.
+Amount | Valor que será creditado na conta.
+CurrencyIsoCode | Código que representa a moeda que está sendo usada.
+Description | Descrição do item.
+FeeType | Define o tipo de cobrança. **Percent** or **Flat**
+FeeValue | Valor da cobrança por essa transação.
+HoldTransaction | Valor boleano que indica se a transação será bloqueada no momento da criação ou não.
+ItemReference | Código de referencia do item.
+SplitTransaction | Valor boleano que define se vai ser feito o Split da transação entre a conta recebendo o crédito e a conta dona da carteira.
+LiabilityShift | Explicado na tabela abaixo *
 
-### Order Parameters
-Parameter | Description
+### Parâmetros do pedido
+Parametro | Descrição
 --------- | -----------
-Amount | Total amount of the order.
-OrderDate | Date of the order.
-OrderReference | Identification for this order (Ex: Order number).
-PaymentDate | Date that this order was paid.
-RefundDate | Data that this order was refunded.
+Amount | Valor total do pedido.
+OrderDate | Data do pedido.
+OrderReference | Identificador do pedido (Ex: numero do pedido).
+PaymentDate | Data que o pedido foi feito.
+RefundDate | Data de estorno do pedido.
 
 
 ### LiabilityShift
-Sending the field LiabilityShift you can define the way that the refund will be made.
-There are two possible values:
+Enviando o campo de LiabilityShift é possivel definir de que forma o estorno será feito.
+Existem dois valores possíveis:
 
-Parameter | Description
+Parametro | Descrição
 --------- | -----------
-Client | When the refund is requested by the client and both the MasterAccount and the SubMerchantAccount will receive theirs amount back.
-Partner | When the refund is requested by the partner and because of that the client will be afected. In this case the partner will continue to pay the comission over the transaction if the transaction was splited.
+Client | Quando o estorno é feito pelo cliente tanto a MasterAccount quanto SubMerchantAccount tem os valores estornados de suas conta.
+Partner | Quanto o pedido de estorno é feito por umas das contas da carteira, e por isso o cliente vai ser afetado, nesse será feito o estorno porem o SubMerchant continuará pagando os valores da comissão da venda.
 
-Sending is optional, and in case it is not sent the default value will be **CLIENT**.
+O envio desse campo é opicional e caso não seja enviado o valor padrão é **Client**
 
 <aside class="warning">
-At the response object you will find the **FinancialMovementKey**. This is the key that will be used to execute all actions related a existing transaction.
+O objeto de resposta de criação de transações contém o **FinancialMovementKey**. Essa chave identifica a transção e será utilizada para as futuras opreções realacionadas a essa transação.
 
-You must keep that information stored, or ortherwise you will not be able to execute any operations related to that transaction.
+É necessário guardar essa informação, pois sem ela não será possível realizar nenhuma operação relacionada a essa transação.
 
 **"FinancialMovementKey": "ba1c2524-bd81-4f9d-8f97-673781768c59"**
 </aside>
 
-## Refund Transaction
+## Estornar uma transação
 ### HTTP REQUEST
 
 `POST https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
-This endpoint is used to Refund a existing transaction.
+Esse recurso é utilizado para estornoar uma transação.
 
-## Update Transaction
-### Http request
->Update Status exemple
+## Atualizar (liberar) uma transação
+### HTTP REQUEST
+> Exemplo de atualização.
 
 ```json
 {
@@ -319,9 +322,9 @@ This endpoint is used to Refund a existing transaction.
 ```
 `PATCH https://smartwallet.mundipaggone.com/Transaction/{financialMovmentKey}`
 
-When creating a transaction there is the option to Block it and retain it values to not be accounted in the total values. After that it's possible to update that transaction status to two possible values:
+Quanto uma transção é criada existe a opção de bloquear a transação e seus valores não serão contabilizados no totais de uma conta. Após isso é possivel atualizar a transação para dois possíveis valores:
 
-Parameter | Description
+Parâmetro | Descrição
 ----------|------------
-Used | When the transaction status is set to Used it sum up to the total value of the account that received that credit.
-Expired | When the transaction status is set to Expired the total value is added to the MasterAccount of that SmartWallet.
+Used | Quanto o status é definido para Usado o valores são liberados e somados os totais das contas.
+Expired | Quanto o status é definido para expirado o valor total da transação é adicionado ao MasterAccount da carteira.
