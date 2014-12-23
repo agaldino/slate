@@ -5,8 +5,7 @@ language_tabs:
   - Json
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  
 
 includes:
   - errors
@@ -18,7 +17,7 @@ search: true
 # Introdução
 
 Bem vindo ao SmartWallet!
-Você pode utilizar API para acessar os recusos do serviço, com os quais é possivel criar, atualizar e consultar informações sobre uma conta, além de executar split de transações.
+Você pode utilizar API para acessar os recusos do serviço, com os quais é possível criar, atualizar e consultar informações sobre uma conta, além de executar o split de transações.
 
 
 # Autenticação
@@ -106,7 +105,7 @@ Você deve substituir `E485075C-A77D-404A-A966-72AD93E1CB7D` com a sua chave pes
 }
 ```
 
-Esse recurso é utilizado para criar uma nova conta que é ligada a sua carteira virtural, que é representada a sua SmartWalletKey.
+Esse recurso é utilizado para criar uma nova conta que é ligada a sua carteira virtual, que é representada por sua SmartWalletKey.
 
 ### HTTP Request
 
@@ -117,7 +116,7 @@ Esse recurso é utilizado para criar uma nova conta que é ligada a sua carteira
 Parâmetros | Descrição
 --------- | -----------
 AccountReference | Identificador da conta definido pelo seu sistema.
-LegalName | Razão social, ou nome caso seja pessoa fisica.
+LegalName | Razão social, ou nome caso seja pessoa física.
 DbaName | Nome fantasia da empresa.
 DocumentNumber | Numero de documento.
 DocumentType | Tipo de documento (CPNJ / CPF).
@@ -146,7 +145,7 @@ Ex:
 Esse recurso é utilizado para atualizar os dados de uma conta já existente. O objeto enviado na requisição é o mesmo utilizado na criação de conta.
 Todos os campos que forem enviados subistituirão os dados já existentes. 
 
-Ex: Se o desejado é atualizar somente a Razão social e o Nome Fantasia da conta, é possível enviar somente esses dados;
+Ex: Se o desejado é atualizar somente a Razão social e o Nome Fantasia da conta, é possível enviar somente esses dados.
 
 ````json
 {
@@ -174,7 +173,7 @@ Ex: Se o desejado é atualizar somente a Razão social e o Nome Fantasia da cont
 
 `GET https://smartwallet.mundipaggone.com/Account/{AccountKey}`
 
-Esse recurso retorna as informações basicas para uma conta especifica.
+Esse recurso retorna as informações básicas para uma conta especifica.
 
 ### Exemplo:
 HTTP's GET para esse recurso utilizando a AccountKey **F0B1E74C-0798-47E4-838D-FE02C9CECC71**
@@ -189,7 +188,7 @@ HTTP's GET para esse recurso utilizando a AccountKey **F0B1E74C-0798-47E4-838D-F
 {    
     "CreditItemCollection": [
         {
-            "OneTransactionKey": "00000000-0000-0000-0000-000000000000"
+            "OneTransactionKey": "00000000-0000-0000-0000-000000000000",
             "AccountKey": "f0b1e74c-0798-47e4-838d-fe02c9cecc71",
             "Amount": 100,
             "CurrencyIsoCode": "BRL",
